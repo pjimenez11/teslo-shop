@@ -5,7 +5,7 @@ import { inter } from "@/config/fonts";
 
 export const metadata: Metadata = {
   title: "Teslo | Shop",
-  description: "Una tienda virtual de",
+  description: "Una tienda virtual de Productos",
 };
 
 export default function RootLayout({
