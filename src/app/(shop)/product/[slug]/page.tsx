@@ -1,4 +1,4 @@
-import { QuantitySelector, SizeSelector } from "@/components";
+import { QuantitySelector, SizeSelector, ProductSlideshow } from "@/components";
 import { titleFont } from "@/config/fonts";
 import { initialData } from "@/seed/seed";
 import { notFound } from "next/navigation";
@@ -20,7 +20,9 @@ export default function ProductPage({ params }: Props) {
 
   return (
     <div className="mt-5 mb-20 grid grid-cols-1 md:grid-cols-3 gap-3">
-      <div className="col-span-1 md:col-span-2">d</div>
+      <div className="col-span-1 md:col-span-2">
+        <ProductSlideshow images={product.images} title={product.title}  />
+      </div>
 
       <div className="col-span-1 px-5">
         <h1 className={` ${titleFont.className} font-bold text-xl`}>
