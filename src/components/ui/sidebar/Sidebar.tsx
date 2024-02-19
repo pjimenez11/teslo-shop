@@ -57,6 +57,7 @@ export const Sidebar = () => {
         <Link
           href="/"
           className="flex items-center mt-8 p-2 hover:bg-gray-100 rounded transition-all"
+          onClick={() => closeMenu()}
         >
           <IoPersonOutline size={30} />
           <span className="ml-3">Perfil</span>
@@ -65,6 +66,7 @@ export const Sidebar = () => {
         <Link
           href="/orders"
           className="flex items-center mt-8 p-2 hover:bg-gray-100 rounded transition-all"
+          onClick={() => closeMenu()}
         >
           <IoTicketOutline size={30} />
           <span className="ml-3">Ordenes</span>
@@ -73,6 +75,7 @@ export const Sidebar = () => {
         <Link
           href="/login"
           className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
+          onClick={() => closeMenu()}
         >
           <IoLogInOutline size={30} />
           <span className="ml-3">Ingresar</span>
@@ -81,6 +84,7 @@ export const Sidebar = () => {
         <Link
           href="/logout"
           className="flex items-center mt-8 p-2 hover:bg-gray-100 rounded transition-all"
+          onClick={() => closeMenu()}
         >
           <IoLogOutOutline size={30} />
           <span className="ml-3">Salir</span>
@@ -91,6 +95,7 @@ export const Sidebar = () => {
         <Link
           href="/products"
           className="flex items-center mt-8 p-2 hover:bg-gray-100 rounded transition-all"
+          onClick={() => closeMenu()}
         >
           <IoShirtOutline size={30} />
           <span className="ml-3">Productos</span>
@@ -99,6 +104,7 @@ export const Sidebar = () => {
         <Link
           href="/orders"
           className="flex items-center mt-8 p-2 hover:bg-gray-100 rounded transition-all"
+          onClick={() => closeMenu()}
         >
           <IoTicketOutline size={30} />
           <span className="ml-3">Ordenes</span>
@@ -107,6 +113,7 @@ export const Sidebar = () => {
         <Link
           href="/users"
           className="flex items-center mt-8 p-2 hover:bg-gray-100 rounded transition-all"
+          onClick={() => closeMenu()}
         >
           <IoPeopleOutline size={30} />
           <span className="ml-3">Usuarios</span>
