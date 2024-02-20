@@ -40,13 +40,24 @@ export default function CheckoutPage() {
                   <p>{product.title}</p>
                   <p>${product.price} x 3</p>
                   <p className="font-bold">Subtotal: ${product.price * 3} </p>
-                  <button className="underline mt-3">Remover</button>
                 </div>
               </div>
             ))}
           </div>
 
           <div className="bg-white rounded-xl shadow-xl p-7 h-min">
+            <h2 className="text-2xl  mb-2">Dirección de entrega</h2>
+            <div className="mb-10">
+              <p className="text-xl">Patricio Jimenez</p>
+              <p>Av. Atahualpa y Rio Coca</p>
+              <p>Huachi Chico</p>
+              <p>Ambato</p>
+              <p>AM45153</p>
+              <p>123.123.123</p>
+            </div>
+
+            <div className="w-full h-0.5 rounded bg-gray-200 mb-10" />
+
             <h2 className="text-2xl mb-2">Resumen de orden</h2>
             <div className="grid grid-cols-2">
               <span>No. Productos</span>
@@ -62,12 +73,12 @@ export default function CheckoutPage() {
               <span className="mt-5 text-2xl text-right">$ 100</span>
             </div>
 
-            <div className="mt-5 w-full">
+            <div className="mt-5 mb-2 w-full">
               <Link
                 className="flex btn-primary justify-center"
-                href="checkout/address"
+                href="/orders/123"
               >
-                Checkout
+                Colocar orden
               </Link>
             </div>
           </div>
