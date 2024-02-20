@@ -38,7 +38,7 @@ export default function CartPage() {
 
                 <div>
                   <p>{product.title}</p>
-                  <p>{product.price}</p>
+                  <p>${product.price}x</p>
                   <QuantitySelector quantity={2} />
                   <button className="underline mt-3">Remover</button>
                 </div>
