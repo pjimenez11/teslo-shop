@@ -2,13 +2,31 @@
 
 import { titleFont } from "@/config/fonts";
 import { useUIStore } from "@/store";
+import clsx from "clsx";
 import Link from "next/link";
+import { useState } from "react";
 import { IoCartOutline, IoSearchOutline } from "react-icons/io5";
 
 export const TopMenu = () => {
   const openMenu = useUIStore((state) => state.openSideMenu);
+  const [scroll, setScroll] = useState(false);
+
+  if (typeof window !== "undefined") {
+    window.onscroll = () => {
+      if (window.scrollY > 1) {
+        setScroll(true);
+      } else {
+        setScroll(false);
+      }
+    };
+  }
+
   return (
-    <nav className="flex px-5 py-2 justify-between items-center w-full">
+    <nav className={
+      clsx("flex px-5 py-2 justify-between items-center w-full sticky bg-white z-10 top-0 transition-all duration-500", {
+        "shadow-md": scroll,
+      })
+    }>
       <div>
         <Link href="/">
           <span className={`${titleFont.className} antialiased font-bold`}>
