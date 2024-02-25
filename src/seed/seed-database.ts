@@ -6,5 +6,8 @@ async function main() {
 }
 
 (() => {
+  if (process.env.NODE_ENV === "production")
+    throw new Error("Seed no debe ejecutarse en produccion");
+
   main();
 })();
