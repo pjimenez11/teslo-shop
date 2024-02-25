@@ -16,6 +16,10 @@ async function main() {
     name: categorie,
   }));
 
+  await prisma.category.createMany({
+    data: categoriesData,
+  });
+
   console.log("Seed ejecutado correctamente");
 }
 
