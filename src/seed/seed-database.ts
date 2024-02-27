@@ -3,11 +3,10 @@ import prisma from "../lib/prisma";
 
 async function main() {
   //1. Borrar todos los datos de la base de datos
-  await Promise.all([
-    prisma.productImage.deleteMany(),
-    prisma.product.deleteMany(),
-    prisma.category.deleteMany(),
-  ]);
+
+  await prisma.productImage.deleteMany();
+  await prisma.product.deleteMany();
+  await prisma.category.deleteMany();
 
   const { categories, products } = initialData;
 
@@ -27,10 +26,18 @@ async function main() {
     return map;
   }, {} as Record<string, string>);
 
-  const { images, type, ...product1 } = products[0];
+  products.forEach(async (product) => {
+    const { images, type, ...res } = product;
+    const productDb = await prisma.product.create({
+      data: { ...res, categoryId: categoriesMap[type] },
+    });
 
-  await prisma.product.create({
-    data: { ...product1, categoryId: categoriesMap[type] },
+    const imagesData = images.map((image) => ({
+      url: image,
+      productId: productDb.id,
+    }));
+
+    await prisma.productImage.createMany({ data: imagesData });
   });
 
   console.log("Seed ejecutado correctamente");
