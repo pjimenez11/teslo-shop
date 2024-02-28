@@ -1,5 +1,5 @@
+"use server";
 import prisma from "@/lib/prisma";
-("use server");
 
 export const getPaginatedProductsWithImages = async () => {
   try {
