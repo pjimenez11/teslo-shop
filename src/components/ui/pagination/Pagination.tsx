@@ -2,7 +2,7 @@
 import { generatePaginationNumbers } from "@/utils";
 import clsx from "clsx";
 import Link from "next/link";
-import { usePathname, useSearchParams } from "next/navigation";
+import { redirect, usePathname, useSearchParams } from "next/navigation";
 import { IoChevronBackOutline, IoChevronForwardOutline } from "react-icons/io5";
 
 interface Props {
@@ -15,11 +15,9 @@ export const Pagination = ({ totalPages }: Props) => {
 
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  let currentPage = parseInt(searchParams.get("page") || "1") || 1;
+  const currentPage = parseInt(searchParams.get("page") || "1") || 1;
 
-  if (currentPage < 1) currentPage = 1;
-
-  console.log("currentPage", currentPage);
+  if (currentPage < 1) redirect(pathname);
 
   const currentPageUrl = (pageNumber: number | string) => {
     const params = new URLSearchParams(searchParams);
