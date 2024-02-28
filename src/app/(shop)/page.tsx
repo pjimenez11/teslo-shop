@@ -12,7 +12,7 @@ interface Props {
 export default async function ShopPage({ searchParams }: Props) {
   const page = searchParams.page ? parseInt(searchParams.page) : 1;
   const take = searchParams.take ? parseInt(searchParams.take) : 12;
-  const { products, currentPage, totalPages } =
+  const { products, totalPages } =
     await getPaginatedProductsWithImages({ page, take });
 
   if (products.length === 0) {
@@ -22,7 +22,7 @@ export default async function ShopPage({ searchParams }: Props) {
     <>
       <Title title="Tienda" subtitle="Todos los productos" className="m-2" />
       <ProductGrid products={products} />
-      <Pagination currentPage={currentPage} totalPages={totalPages} />
+      <Pagination totalPages={totalPages} />
     </>
   );
 }
