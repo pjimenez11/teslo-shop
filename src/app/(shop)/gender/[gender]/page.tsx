@@ -1,4 +1,4 @@
-import { ProductGrid, Title } from "@/components";
+import { Pagination, ProductGrid, Title } from "@/components";
 import { notFound } from "next/navigation";
 import { Category } from "@/interfaces";
 import { getPaginatedProductsWithImages } from "@/actions";
@@ -36,11 +36,13 @@ export default async function CategoryPage({ params, searchParams }: Props) {
 
   const page = searchParams.page ? parseInt(searchParams.page) : 1;
   const take = searchParams.take ? parseInt(searchParams.take) : 12;
-  const { products } = await getPaginatedProductsWithImages({
+  const { products, currentPage, totalPages } = await getPaginatedProductsWithImages({
     page,
     take,
     gender,
   });
+  console.log(currentPage)
+  console.log(totalPages)
   return (
     <>
       <Title
@@ -49,6 +51,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
         className="m-2"
       />
       <ProductGrid products={products} />
+      <Pagination currentPage={currentPage} totalPages={totalPages} />
     </>
   );
 }
