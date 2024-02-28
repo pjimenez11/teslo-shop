@@ -48,13 +48,15 @@ export const Pagination = ({ totalPages }: Props) => {
   const pages = generatePaginationNumbers(currentPage, totalPages);
 
   return (
-    <div className="flex text-center justify-center mt-10 mb-32">
+    <div className="flex text-center items-center justify-center mt-10 mb-32">
       <nav aria-label="Page navigation example">
-        <ul className="flex list-style-none">
-          <li className="page-item">
+        <ul className="flex list-style-none items-center gap-1">
+          <li className="page-item disabled">
             <Link
-              aria-disabled={currentPage === 1}
-              className="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300  text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none"
+              className={clsx(
+                "page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300  text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none",
+                { "text-gray-500 pointer-events-none": currentPage === 1 }
+              )}
               href={currentPageUrl(currentPage - 1)}
             >
               <IoChevronBackOutline size={30} />
@@ -80,7 +82,13 @@ export const Pagination = ({ totalPages }: Props) => {
 
           <li className="page-item">
             <Link
-              className="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300  text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none"
+              className={clsx(
+                "page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300  text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none",
+                {
+                  "text-gray-500 pointer-events-none":
+                    currentPage === totalPages,
+                }
+              )}
               href={currentPageUrl(currentPage + 1)}
             >
               <IoChevronForwardOutline size={30} />
