@@ -1,4 +1,5 @@
 "use client";
+import { generatePaginationNumbers } from "@/utils";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { IoChevronBackOutline, IoChevronForwardOutline } from "react-icons/io5";
@@ -17,7 +18,6 @@ export const Pagination = ({ totalPages }: Props) => {
 
   const currentPageUrl = (pageNumber: number | string) => {
     const params = new URLSearchParams(searchParams);
-    console.log(params);
     if (pageNumber === "...") {
       return `${pathname}?${params.toString()}`;
     }
@@ -34,7 +34,7 @@ export const Pagination = ({ totalPages }: Props) => {
     return `${pathname}?${params.toString()}`;
   };
 
-  const pages = Array.from({ length: totalPages }, (x, i) => i + 1);
+  const pages = generatePaginationNumbers(currentPage, 10);
 
   return (
     <div className="flex text-center justify-center mt-10 mb-32">
