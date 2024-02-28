@@ -15,7 +15,11 @@ export const Pagination = ({ totalPages }: Props) => {
 
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const currentPage = Number(searchParams.get("page") || 1);
+  let currentPage = parseInt(searchParams.get("page") || "1") || 1;
+
+  if (currentPage < 1) currentPage = 1;
+
+  console.log("currentPage", currentPage);
 
   const currentPageUrl = (pageNumber: number | string) => {
     const params = new URLSearchParams(searchParams);

@@ -41,7 +41,7 @@ export default function CategoryPage({ params }: Props) {
         subtitle={subTitle[id]}
         className="m-2"
       />
-      <ProductGrid products={filteredProducts} />
-    </>
+{/*       <ProductGrid products={filteredProducts} />
+ */}    </>
   );
 }
