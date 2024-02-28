@@ -5,16 +5,16 @@ import { redirect } from "next/navigation";
 interface Props {
   searchParams: {
     page?: string;
+    take?: string;
   };
 }
 
 export default async function ShopPage({ searchParams }: Props) {
   const page = searchParams.page ? parseInt(searchParams.page) : 1;
+  const take = searchParams.take ? parseInt(searchParams.take) : 12;
   const { products, currentPage, totalPages } =
-    await getPaginatedProductsWithImages({ page });
+    await getPaginatedProductsWithImages({ page, take });
 
-  console.log("currentPage", currentPage);
-  console.log("totalPages", totalPages);
   if (products.length === 0) {
     redirect("/");
   }

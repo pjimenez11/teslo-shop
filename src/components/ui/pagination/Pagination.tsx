@@ -1,5 +1,6 @@
 "use client";
 import { generatePaginationNumbers } from "@/utils";
+import clsx from "clsx";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { IoChevronBackOutline, IoChevronForwardOutline } from "react-icons/io5";
@@ -19,6 +20,14 @@ export const Pagination = ({ totalPages }: Props) => {
   const currentPageUrl = (pageNumber: number | string) => {
     const params = new URLSearchParams(searchParams);
     if (pageNumber === "...") {
+      if (currentPage <= 3) {
+        params.set("page", "4");
+        return `${pathname}?${params.toString()}`;
+      }
+      if (currentPage >= totalPages - 2) {
+        params.set("page", `${totalPages - 3}`);
+        return `${pathname}?${params.toString()}`;
+      }
       return `${pathname}?${params.toString()}`;
     }
 
@@ -34,7 +43,7 @@ export const Pagination = ({ totalPages }: Props) => {
     return `${pathname}?${params.toString()}`;
   };
 
-  const pages = generatePaginationNumbers(currentPage, 10);
+  const pages = generatePaginationNumbers(currentPage, totalPages);
 
   return (
     <div className="flex text-center justify-center mt-10 mb-32">
@@ -53,11 +62,13 @@ export const Pagination = ({ totalPages }: Props) => {
           {pages.map((page, index) => (
             <li key={index} className="page-item">
               <Link
-                className={`page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none ${
-                  currentPage === page
-                    ? "bg-blue-600 text-white hover:text-white hover:bg-blue-600 shadow-md focus:shadow-md"
-                    : ""
-                }`}
+                className={clsx(
+                  "page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none ",
+                  {
+                    "bg-blue-600 text-white hover:text-white hover:bg-blue-600 shadow-md focus:shadow-md":
+                      currentPage === page,
+                  }
+                )}
                 href={currentPageUrl(page)}
               >
                 {page}
