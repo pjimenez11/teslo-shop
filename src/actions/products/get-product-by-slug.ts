@@ -1,7 +1,6 @@
 "use server";
 
 export const getProductBySlug = async (slug: string) => {
-
   try {
     const productData = await prisma?.product.findUnique({
       where: { slug },
@@ -13,10 +12,8 @@ export const getProductBySlug = async (slug: string) => {
     }
 
     return {
-      product: {
-        ...productData,
-        images: productData.ProductImage.map((image) => image.url) ,
-      },
+      ...productData,
+      images: productData.ProductImage.map((image) => image.url),
     };
   } catch (error) {
     throw new Error("Error, no se pudo obtener el producto");

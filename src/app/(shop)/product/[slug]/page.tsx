@@ -1,3 +1,5 @@
+export const revalidate = 604800;
+
 import { getProductBySlug } from "@/actions";
 import {
   QuantitySelector,
@@ -16,9 +18,7 @@ interface Props {
 
 export default async function ProductPage({ params }: Props) {
   const { slug } = params;
-  const result = await getProductBySlug(slug);
-
-  const product = result?.product;
+  const product = await getProductBySlug(slug);
 
   if (!product) {
     notFound();
@@ -41,6 +41,10 @@ export default async function ProductPage({ params }: Props) {
       </div>
 
       <div className="col-span-1 px-5">
+        <h1 className={` ${titleFont.className} font-bold text-xl`}>
+          Stock: {product.inStock}
+        </h1>
+
         <h1 className={` ${titleFont.className} font-bold text-xl`}>
           {product.title}
         </h1>
