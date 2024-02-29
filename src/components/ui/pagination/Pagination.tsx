@@ -1,4 +1,5 @@
 "use client";
+
 import { generatePaginationNumbers } from "@/utils";
 import clsx from "clsx";
 import Link from "next/link";
@@ -10,10 +11,10 @@ interface Props {
 }
 
 export const Pagination = ({ totalPages }: Props) => {
-  if (totalPages === 1) return null;
-
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  
+  if (totalPages === 1) return null;
   const currentPage = parseInt(searchParams.get("page") || "1") || 1;
 
   if (currentPage < 1) redirect(pathname);

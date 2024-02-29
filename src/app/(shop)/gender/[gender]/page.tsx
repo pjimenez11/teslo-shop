@@ -1,3 +1,5 @@
+export const revalidate = 60;
+
 import { Pagination, ProductGrid, Title } from "@/components";
 import { notFound, redirect } from "next/navigation";
 import { getPaginatedProductsWithImages } from "@/actions";
@@ -36,12 +38,11 @@ export default async function CategoryPage({ params, searchParams }: Props) {
 
   const page = searchParams.page ? parseInt(searchParams.page) : 1;
   const take = searchParams.take ? parseInt(searchParams.take) : 12;
-  const { products, totalPages } =
-    await getPaginatedProductsWithImages({
-      page,
-      take,
-      gender: gender as Gender,
-    });
+  const { products, totalPages } = await getPaginatedProductsWithImages({
+    page,
+    take,
+    gender: gender as Gender,
+  });
 
   if (products.length === 0) {
     redirect(`/gender/${gender}`);
