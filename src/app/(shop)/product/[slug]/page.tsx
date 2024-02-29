@@ -1,6 +1,11 @@
-import { QuantitySelector, SizeSelector, ProductSlideshow, ProductMobileSlideshow } from "@/components";
+import { getProductBySlug } from "@/actions";
+import {
+  QuantitySelector,
+  SizeSelector,
+  ProductSlideshow,
+  ProductMobileSlideshow,
+} from "@/components";
 import { titleFont } from "@/config/fonts";
-import { initialData } from "@/seed/seed";
 import { notFound } from "next/navigation";
 
 interface Props {
@@ -9,10 +14,11 @@ interface Props {
   };
 }
 
-export default function ProductPage({ params }: Props) {
+export default async function ProductPage({ params }: Props) {
   const { slug } = params;
+  const result = await getProductBySlug(slug);
 
-  const product = initialData.products.find((product) => product.slug === slug);
+  const product = result?.product;
 
   if (!product) {
     notFound();
@@ -21,10 +27,17 @@ export default function ProductPage({ params }: Props) {
   return (
     <div className="mt-5 mb-20 grid grid-cols-1 md:grid-cols-3 gap-3">
       <div className="col-span-1 md:col-span-2">
+        <ProductMobileSlideshow
+          images={product.images}
+          title={product.title}
+          className="md:hidden"
+        />
 
-        <ProductMobileSlideshow images={product.images} title={product.title} className="md:hidden" />
-
-        <ProductSlideshow images={product.images} title={product.title} className="hidden md:block"/>
+        <ProductSlideshow
+          images={product.images}
+          title={product.title}
+          className="hidden md:block"
+        />
       </div>
 
       <div className="col-span-1 px-5">

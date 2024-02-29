@@ -1,5 +1,4 @@
 "use server";
-import { Category } from "@/interfaces";
 import prisma from "@/lib/prisma";
 import { Gender } from "@prisma/client";
 
