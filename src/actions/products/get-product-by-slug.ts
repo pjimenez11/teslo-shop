@@ -1,8 +1,10 @@
 "use server";
 
+import prisma from "@/lib/prisma";
+
 export const getProductBySlug = async (slug: string) => {
   try {
-    const productData = await prisma?.product.findUnique({
+    const productData = await prisma.product.findUnique({
       where: { slug },
       include: { ProductImage: { select: { url: true } } },
     });

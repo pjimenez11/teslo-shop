@@ -6,6 +6,7 @@ import {
   SizeSelector,
   ProductSlideshow,
   ProductMobileSlideshow,
+  StockLabel,
 } from "@/components";
 import { titleFont } from "@/config/fonts";
 import { notFound } from "next/navigation";
@@ -41,14 +42,12 @@ export default async function ProductPage({ params }: Props) {
       </div>
 
       <div className="col-span-1 px-5">
-        <h1 className={` ${titleFont.className} font-bold text-xl`}>
-          Stock: {product.inStock}
-        </h1>
+        <StockLabel slug={slug} />
 
         <h1 className={` ${titleFont.className} font-bold text-xl`}>
           {product.title}
         </h1>
-        <p className="text-lg mb-5">{product.price}</p>
+        <p className="text-lg mb-5">${product.price}</p>
 
         <SizeSelector
           selectedSize={product.sizes[0]}
