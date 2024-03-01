@@ -1,7 +1,7 @@
 "use client";
 
 import { titleFont } from "@/config/fonts";
-import { useUIStore } from "@/store";
+import { useCartStore, useUIStore } from "@/store";
 import clsx from "clsx";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -9,6 +9,7 @@ import { IoCartOutline, IoSearchOutline } from "react-icons/io5";
 
 export const TopMenu = () => {
   const openMenu = useUIStore((state) => state.openSideMenu);
+  const cart = useCartStore((state) => state.cart);
   const [scroll, setScroll] = useState(false);
 
   useEffect(() => {
@@ -26,6 +27,8 @@ export const TopMenu = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  const quantityCart = cart.reduce((acc, item) => acc + item.quantity, 0);
 
   return (
     <nav
@@ -73,7 +76,7 @@ export const TopMenu = () => {
         <Link href="/cart">
           <div className="relative">
             <span className="absolute px-1 text-xs rounded-full font-bold -top-2 -right-2 bg-blue-700 text-white">
-              3
+              {quantityCart > 9 ? "9+" : quantityCart}
             </span>
             <IoCartOutline className="w-5 h-5" />
           </div>
