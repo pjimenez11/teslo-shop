@@ -23,17 +23,9 @@ export const StockLabel = ({ slug }: Props) => {
 
   return (
     <>
-      {!isLoanding ? (
-        <h1 className={` ${titleFont.className} font-bold text-lg`}>
-          Stock: {stock}
+      <h1 className={` ${titleFont.className} font-bold text-lg`}>
+          Stock: {isLoanding ? "..." : stock}
         </h1>
-      ) : (
-        <h1
-          className={` ${titleFont.className} animate-pulse bg-slate-300 font-bold text-lg`}
-        >
-          &nbsp;
-        </h1>
-      )}
     </>
   );
 };
