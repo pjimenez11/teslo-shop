@@ -1,18 +1,15 @@
+"use client";
+
 import { QuantitySelector, Title } from "@/components";
-import { initialData } from "@/seed/seed";
+import { useCartStore } from "@/store";
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
-const productsInCart = [
-  initialData.products[0],
-  initialData.products[1],
-  initialData.products[2],
-];
-
 export default function CartPage() {
+  const cart = useCartStore((state) => state.cart);
 
-  if (productsInCart.length === 0) {
+  if (cart.length === 0) {
     redirect("/empty");
   }
 
@@ -28,10 +25,10 @@ export default function CartPage() {
               Continúa comprando
             </Link>
 
-            {productsInCart.map((product) => (
+            {cart.map((product) => (
               <div key={product.slug} className="flex mb-5">
                 <Image
-                  src={`/products/${product.images[0]}`}
+                  src={`/products/${product.image}`}
                   alt={product.title}
                   width={100}
                   height={100}
@@ -45,7 +42,7 @@ export default function CartPage() {
                 <div>
                   <p>{product.title}</p>
                   <p>${product.price}x</p>
-                  <QuantitySelector quantity={2} />
+                  <QuantitySelector quantity={product.quantity} />
                   <button className="underline mt-3">Remover</button>
                 </div>
               </div>
