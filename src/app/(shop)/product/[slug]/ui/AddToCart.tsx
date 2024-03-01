@@ -2,7 +2,8 @@
 
 import { getStockBySlug } from "@/actions";
 import { QuantitySelector, SizeSelector } from "@/components";
-import { Product, Size } from "@/interfaces";
+import { CartProduct, Product, Size } from "@/interfaces";
+import { useCartStore } from "@/store";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
 
@@ -16,6 +17,7 @@ export const AddToCart = ({ product }: Props) => {
   const [stock, setStock] = useState<number>(0);
   const [isLoanding, setIsLoanding] = useState(true);
   const [posted, setPosted] = useState(false);
+  const { addProductToCart, cart } = useCartStore((state) => state);
 
   useEffect(() => {
     const getStock = async () => {
@@ -34,13 +36,23 @@ export const AddToCart = ({ product }: Props) => {
     if (stock <= 0) return;
     setPosted(true);
     if (!size) return;
-    console.log("Agregando al carrito", { size, quantity });
+    addProductToCart({
+      id: product.id,
+      size: size,
+      quantity: quantity,
+      image: product.images[0],
+      price: product.price,
+      slug: product.slug,
+      title: product.title,
+    } as CartProduct);
   };
 
   return (
     <>
       {posted && !size && (
-        <p className="text-red-500 mt-2 fade-in transition-all ">Debes seleccionar una talla</p>
+        <p className="text-red-500 mt-2 fade-in transition-all ">
+          Debes seleccionar una talla
+        </p>
       )}
       <SizeSelector
         selectedSize={size}
@@ -56,13 +68,10 @@ export const AddToCart = ({ product }: Props) => {
       />
 
       <button
-        className={clsx(
-          "text-white py-2 px-4 rounded transition-all my-5",
-          {
-            "bg-slate-400": isLoanding || stock <= 0,
-            "bg-blue-600 hover:bg-blue-800": !isLoanding && stock > 0,
-          }
-        )}
+        className={clsx("text-white py-2 px-4 rounded transition-all my-5", {
+          "bg-slate-400": isLoanding || stock <= 0,
+          "bg-blue-600 hover:bg-blue-800": !isLoanding && stock > 0,
+        })}
         disabled={isLoanding || stock <= 0}
         onClick={() => addToCart()}
       >
