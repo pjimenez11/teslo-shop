@@ -5,10 +5,14 @@ import { redirect } from "next/navigation";
 import { QuantitySelector } from "../../../../components/product/quantity-selector/QuantitySelector";
 import { useEffect, useState } from "react";
 import { LoandingCartProduct } from "@/components";
+import Link from "next/link";
 
 export const ProductsInCart = () => {
   const [loaded, setLoaded] = useState(false);
   const productsInCart = useCartStore((state) => state.cart);
+  const updateProductQuantity = useCartStore(
+    (state) => state.updateProductQuantity
+  );
 
   useEffect(() => {
     setLoaded(true);
@@ -43,13 +47,20 @@ export const ProductsInCart = () => {
           />
 
           <div>
-            <p>
-              {product.size} - {product.title}
-            </p>
+            <Link
+              className="hover:text-blue-500 transition-all"
+              href={`/product/${product.slug}`}
+            >
+              <p>
+                {product.size} - {product.title}
+              </p>
+            </Link>
             <p>${product.price}</p>
             <QuantitySelector
               quantity={product.quantity}
-              onQuantityChange={(value) => console.log(value)}
+              onQuantityChange={(value) =>
+                updateProductQuantity(product.id, product.size, value)
+              }
             />
 
             <button className="underline mt-3">Remover</button>
