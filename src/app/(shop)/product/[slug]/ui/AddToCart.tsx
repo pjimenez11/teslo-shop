@@ -1,11 +1,9 @@
 "use client";
 
-import { getStockBySlug } from "@/actions";
 import { QuantitySelector, SizeSelector } from "@/components";
-import { CartProduct, Product, Size } from "@/interfaces";
+import type { CartProduct, Product, Size } from "@/interfaces";
 import { useCartStore } from "@/store";
-import clsx from "clsx";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 interface Props {
   product: Product;
@@ -15,20 +13,26 @@ export const AddToCart = ({ product }: Props) => {
   const [size, setSize] = useState<Size | undefined>();
   const [quantity, setQuantity] = useState<number>(1);
   const [posted, setPosted] = useState(false);
-  const { addProductToCart, cart } = useCartStore((state) => state);
+  const addProductToCart = useCartStore((state) => state.addProductToCart);
 
   const addToCart = () => {
     setPosted(true);
     if (!size) return;
-    addProductToCart({
+
+    const CartProduct: CartProduct = {
       id: product.id,
-      size: size,
-      quantity: quantity,
-      image: product.images[0],
-      price: product.price,
       slug: product.slug,
       title: product.title,
-    } as CartProduct);
+      price: product.price,
+      quantity: quantity,
+      size: size,
+      image: product.images[0],
+    };
+
+    addProductToCart(CartProduct);
+    setPosted(false);
+    setQuantity(1);
+    setSize(undefined);
   };
 
   return (
@@ -44,15 +48,9 @@ export const AddToCart = ({ product }: Props) => {
         onSelectSize={setSize}
       />
 
-      <QuantitySelector
-        quantity={quantity}
-        onQuantityChange={setQuantity}
-      />
+      <QuantitySelector quantity={quantity} onQuantityChange={setQuantity} />
 
-      <button
-        className="btn-primary my-5"
-        onClick={() => addToCart()}
-      >
+      <button className="btn-primary my-5" onClick={() => addToCart()}>
         Agregar al carrito
       </button>
     </>

@@ -9,8 +9,13 @@ import { IoCartOutline, IoSearchOutline } from "react-icons/io5";
 
 export const TopMenu = () => {
   const openMenu = useUIStore((state) => state.openSideMenu);
-  const cart = useCartStore((state) => state.cart);
+  const getTotalItems = useCartStore((state) => state.getTotalItems);
   const [scroll, setScroll] = useState(false);
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    setLoaded(true);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -27,8 +32,6 @@ export const TopMenu = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-
-  const quantityCart = cart.reduce((acc, item) => acc + item.quantity, 0);
 
   return (
     <nav
@@ -75,9 +78,11 @@ export const TopMenu = () => {
         </Link>
         <Link href="/cart">
           <div className="relative">
-            <span className="absolute px-1 text-xs rounded-full font-bold -top-2 -right-2 bg-blue-700 text-white">
-              {quantityCart > 9 ? "9+" : quantityCart}
-            </span>
+            {loaded && (
+              <span className="absolute px-1 text-xs rounded-full font-bold -top-2 -right-2 bg-blue-700 text-white">
+                {getTotalItems() > 9 ? "9+" : getTotalItems()}
+              </span>
+            )}
             <IoCartOutline className="w-5 h-5" />
           </div>
         </Link>

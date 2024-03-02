@@ -13,6 +13,10 @@ export default function CartPage() {
     redirect("/empty");
   }
 
+  const onQuantityChange = (id: string, size: string, quantity: number) => {
+    // updateProductQuantity(id, size, quantity);
+  };
+
   return (
     <div className="flex justify-center items-center mb-72 px-10 sm:px-0">
       <div className="flex flex-col w-[1000px]">
@@ -26,7 +30,10 @@ export default function CartPage() {
             </Link>
 
             {cart.map((product) => (
-              <div key={product.slug} className="flex mb-5">
+              <div
+                key={`${product.slug} - ${product.size}`}
+                className="flex mb-5"
+              >
                 <Image
                   src={`/products/${product.image}`}
                   alt={product.title}
@@ -40,10 +47,12 @@ export default function CartPage() {
                 />
 
                 <div>
-                  <p>{product.title}</p>
-                  <p>${product.price}x</p>
-                  <QuantitySelector quantity={product.quantity} />
-                  <button className="underline mt-3">Remover</button>
+                  <p>
+                    {product.size} - {product.title}
+                  </p>
+                  <p>${product.price}</p>
+{/*                   <QuantitySelector quantity={product.quantity} />
+ */}                  <button className="underline mt-3">Remover</button>
                 </div>
               </div>
             ))}
