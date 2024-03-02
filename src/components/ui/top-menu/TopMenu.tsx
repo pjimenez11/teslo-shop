@@ -9,7 +9,7 @@ import { IoCartOutline, IoSearchOutline } from "react-icons/io5";
 
 export const TopMenu = () => {
   const openMenu = useUIStore((state) => state.openSideMenu);
-  const getTotalItems = useCartStore((state) => state.getTotalItems);
+  const totalItems = useCartStore((state) => state.getTotalItems());
   const [scroll, setScroll] = useState(false);
   const [loaded, setLoaded] = useState(false);
 
@@ -80,7 +80,7 @@ export const TopMenu = () => {
           <div className="relative">
             {loaded && (
               <span className="absolute px-1 text-xs rounded-full font-bold -top-2 -right-2 bg-blue-700 text-white">
-                {getTotalItems() > 9 ? "9+" : getTotalItems()}
+                {totalItems}
               </span>
             )}
             <IoCartOutline className="w-5 h-5" />
