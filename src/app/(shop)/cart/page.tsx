@@ -1,21 +1,10 @@
 "use client";
 
-import { QuantitySelector, Title } from "@/components";
-import { useCartStore } from "@/store";
-import Image from "next/image";
+import { Title } from "@/components";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { ProductsInCart } from "./ui/ProductsInCart";
 
 export default function CartPage() {
-  const cart = useCartStore((state) => state.cart);
-
-  if (cart.length === 0) {
-    redirect("/empty");
-  }
-
-  const onQuantityChange = (id: string, size: string, quantity: number) => {
-    // updateProductQuantity(id, size, quantity);
-  };
 
   return (
     <div className="flex justify-center items-center mb-72 px-10 sm:px-0">
@@ -29,33 +18,7 @@ export default function CartPage() {
               Continúa comprando
             </Link>
 
-            {cart.map((product) => (
-              <div
-                key={`${product.slug} - ${product.size}`}
-                className="flex mb-5"
-              >
-                <Image
-                  src={`/products/${product.image}`}
-                  alt={product.title}
-                  width={100}
-                  height={100}
-                  className="mr-5 rounded"
-                  style={{
-                    width: "100px",
-                    height: "100px",
-                  }}
-                />
-
-                <div>
-                  <p>
-                    {product.size} - {product.title}
-                  </p>
-                  <p>${product.price}</p>
-{/*                   <QuantitySelector quantity={product.quantity} />
- */}                  <button className="underline mt-3">Remover</button>
-                </div>
-              </div>
-            ))}
+            <ProductsInCart />
           </div>
 
           <div className="bg-white rounded-xl shadow-xl p-7 h-min">
