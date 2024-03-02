@@ -1,13 +1,13 @@
 import type { CartProduct } from "@/interfaces";
 import { create } from "zustand";
-import { persist,  } from "zustand/middleware";
+import { persist } from "zustand/middleware";
 
 interface State {
   cart: CartProduct[];
   getTotalItems: () => number;
   addProductToCart: (product: CartProduct) => void;
   updateProductQuantity: (id: string, size: string, quantity: number) => void;
-  //removeProductFromCart:
+  removeProductFromCart: (id: string, size: string) => void;
 }
 
 export const useCartStore = create<State>()(
@@ -48,7 +48,14 @@ export const useCartStore = create<State>()(
         });
         set({ cart: updatedCartProducts });
       },
+      removeProductFromCart: (id: string, size: string) => {
+        const { cart } = get();
+        const updatedCartProducts = cart.filter(
+          (item) => item.id !== id || item.size !== size
+        );
+        set({ cart: updatedCartProducts });
+      },
     }),
-    { name: "shopping-cart"}
+    { name: "shopping-cart" }
   )
 );
