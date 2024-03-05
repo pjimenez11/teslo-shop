@@ -1,6 +1,6 @@
 "use client";
 
-import { authenticate } from "@/actions/auth/login";
+import { authenticate } from "@/actions";
 import clsx from "clsx";
 import Link from "next/link";
 import { useFormState, useFormStatus } from "react-dom";
