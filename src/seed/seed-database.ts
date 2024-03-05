@@ -14,7 +14,7 @@ async function main() {
   //2. Insertar datos iniciales
 
   await prisma.user.createMany({ data: users });
-  
+
   const categoriesData = categories.map((categorie) => ({
     name: categorie,
   }));
