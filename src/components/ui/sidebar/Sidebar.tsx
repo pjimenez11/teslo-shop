@@ -17,12 +17,15 @@ import {
 } from "react-icons/io5";
 
 export const Sidebar = () => {
+  const { data: session } = useSession();
   const isSideMenuOpen = useUIStore((state) => state.isSideMenuOpen);
   const closeMenu = useUIStore((state) => state.closeSideMenu);
 
-  const { data: session } = useSession();
+  console.log("session sidebar", session);
 
   const isAuthenticated = !!session?.user;
+
+  const isAdmin = session?.user.role === "admin";
 
   return (
     <div>
@@ -59,24 +62,27 @@ export const Sidebar = () => {
             placeholder="Buscar"
           />
         </div>
+        {isAuthenticated && (
+          <>
+            <Link
+              href="/profile"
+              className="flex items-center mt-8 p-2 hover:bg-gray-100 rounded transition-all"
+              onClick={() => closeMenu()}
+            >
+              <IoPersonOutline size={30} />
+              <span className="ml-3">Perfil</span>
+            </Link>
 
-        <Link
-          href="/profile"
-          className="flex items-center mt-8 p-2 hover:bg-gray-100 rounded transition-all"
-          onClick={() => closeMenu()}
-        >
-          <IoPersonOutline size={30} />
-          <span className="ml-3">Perfil</span>
-        </Link>
-
-        <Link
-          href="/orders"
-          className="flex items-center mt-8 p-2 hover:bg-gray-100 rounded transition-all"
-          onClick={() => closeMenu()}
-        >
-          <IoTicketOutline size={30} />
-          <span className="ml-3">Ordenes</span>
-        </Link>
+            <Link
+              href="/orders"
+              className="flex items-center mt-8 p-2 hover:bg-gray-100 rounded transition-all"
+              onClick={() => closeMenu()}
+            >
+              <IoTicketOutline size={30} />
+              <span className="ml-3">Ordenes</span>
+            </Link>
+          </>
+        )}
 
         {!isAuthenticated && (
           <Link
@@ -99,34 +105,35 @@ export const Sidebar = () => {
           </button>
         )}
 
-        <div className="w-full h-px bg-gray-200 my-8"></div>
-
-        <Link
-          href="/products"
-          className="flex items-center mt-8 p-2 hover:bg-gray-100 rounded transition-all"
-          onClick={() => closeMenu()}
-        >
-          <IoShirtOutline size={30} />
-          <span className="ml-3">Productos</span>
-        </Link>
-
-        <Link
-          href="/orders"
-          className="flex items-center mt-8 p-2 hover:bg-gray-100 rounded transition-all"
-          onClick={() => closeMenu()}
-        >
-          <IoTicketOutline size={30} />
-          <span className="ml-3">Ordenes</span>
-        </Link>
-
-        <Link
-          href="/users"
-          className="flex items-center mt-8 p-2 hover:bg-gray-100 rounded transition-all"
-          onClick={() => closeMenu()}
-        >
-          <IoPeopleOutline size={30} />
-          <span className="ml-3">Usuarios</span>
-        </Link>
+        {isAuthenticated && isAdmin && (
+          <>
+            <div className="w-full h-px bg-gray-200 my-8"></div>
+            <Link
+              href="/products"
+              className="flex items-center mt-8 p-2 hover:bg-gray-100 rounded transition-all"
+              onClick={() => closeMenu()}
+            >
+              <IoShirtOutline size={30} />
+              <span className="ml-3">Productos</span>
+            </Link>
+            <Link
+              href="/orders"
+              className="flex items-center mt-8 p-2 hover:bg-gray-100 rounded transition-all"
+              onClick={() => closeMenu()}
+            >
+              <IoTicketOutline size={30} />
+              <span className="ml-3">Ordenes</span>
+            </Link>
+            <Link
+              href="/users"
+              className="flex items-center mt-8 p-2 hover:bg-gray-100 rounded transition-all"
+              onClick={() => closeMenu()}
+            >
+              <IoPeopleOutline size={30} />
+              <span className="ml-3">Usuarios</span>
+            </Link>
+          </>
+        )}
       </nav>
     </div>
   );
