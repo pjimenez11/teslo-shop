@@ -6,11 +6,11 @@ export default async function AuthLayout({
 }: {
   children: React.ReactNode;
 }) {
-  /* const session = await auth();
+  const session = await auth();
 
   if (session?.user) {
     redirect("/");
-  } */
+  }
   return (
     <main className="flex justify-center">
       <div className="w-full sm:w-4/6 md:w-3/6 lg:w-2/6 max-w-[600px] px-10">
