@@ -15,3 +15,5 @@ export * from "./product/slideshow/ProductMobileSlideshow";
 export * from "./product/stock-label/StockLabel";
 
 export * from "./ui/loading/LoandingCartProduct";
+
+export * from "./provider/Provider";
