@@ -48,19 +48,27 @@ export const RegisterForm = () => {
         {...register("email", { required: true, pattern: /^\S+@\S+$/i })}
       />
       <div className="text-sm text-red-500 mb-2">
-        {errors.email?.type === "required" && "El correo electronico es requerido"}
-        {errors.email?.type === "pattern" && "El correo electronico no es valido"}&nbsp;
+        {errors.email?.type === "required" &&
+          "El correo electronico es requerido"}
+        {errors.email?.type === "pattern" &&
+          "El correo electronico no es valido"}
         &nbsp;
       </div>
 
       <label htmlFor="email">Contraseña</label>
       <input
-        className={clsx("px-5 py-2 border bg-gray-200 rounded mb-5", {
+        className={clsx("px-5 py-2 border bg-gray-200 rounded", {
           "border-red-500": errors.password,
         })}
         type="password"
-        {...register("password", { required: true })}
+        {...register("password", { required: true, minLength: 6 })}
       />
+      <div className="text-sm text-red-500 mb-5">
+        {errors.password?.type === "required" && "La contraseña es requerida"}
+        {errors.password?.type === "minLength" &&
+          "La contraseña debe tener al menos 6 caracteres"}
+        &nbsp;
+      </div>
 
       <button className="btn-primary">Crear cuenta</button>
 
