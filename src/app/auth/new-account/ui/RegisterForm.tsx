@@ -1,8 +1,11 @@
 "use client";
 
+import { authenticate, login, registerUser } from "@/actions";
 import clsx from "clsx";
 import Link from "next/link";
+import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { IoInformationOutline } from "react-icons/io5";
 
 type FormInputs = {
   name: string;
@@ -17,11 +20,20 @@ export const RegisterForm = () => {
     formState: { errors },
   } = useForm<FormInputs>();
 
-  console.log(errors);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const onSubmit: SubmitHandler<FormInputs> = async (data) => {
     const { name, email, password } = data;
-    console.log({ name, email, password });
+    const resp = await registerUser(name, email, password);
+
+    if (!resp.ok) {
+      setErrorMessage(resp.message);
+      return;
+    }
+
+    await login(email.toLowerCase(), password);
+    setErrorMessage("");
+    window.location.replace("/");
   };
 
   return (
@@ -63,11 +75,24 @@ export const RegisterForm = () => {
         type="password"
         {...register("password", { required: true, minLength: 6 })}
       />
-      <div className="text-sm text-red-500 mb-5">
+      <div className="text-sm text-red-500 mb-1">
         {errors.password?.type === "required" && "La contraseña es requerida"}
         {errors.password?.type === "minLength" &&
           "La contraseña debe tener al menos 6 caracteres"}
         &nbsp;
+      </div>
+
+      <div
+        className="flex h-5 fade-in items-end space-x-1"
+        aria-live="polite"
+        aria-atomic="true"
+      >
+        {errorMessage && (
+          <div className="flex flex-row">
+            <IoInformationOutline className="h-5 w-5 text-red-500" />
+            <p className="text-sm text-red-500">{errorMessage}</p>
+          </div>
+        )}
       </div>
 
       <button className="btn-primary">Crear cuenta</button>

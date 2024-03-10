@@ -3,6 +3,7 @@
 import { authenticate } from "@/actions";
 import clsx from "clsx";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 //import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useFormState, useFormStatus } from "react-dom";
@@ -12,10 +13,15 @@ export const LoginForm = () => {
   //const router = useRouter();
   const [state, dispatch] = useFormState(authenticate, undefined);
 
+  const searchParams = useSearchParams();
+
+  const redirectPath = searchParams.get("callbackUrl")
+
   useEffect(() => {
     if (state === "Success") {
       //router.replace("/");
-      window.location.replace("/");
+
+      window.location.replace(redirectPath || "/");
     }
   }, [state]);
 
@@ -40,7 +46,7 @@ export const LoginForm = () => {
         aria-live="polite"
         aria-atomic="true"
       >
-        {state==="CredentialsSignin" && (
+        {state === "CredentialsSignin" && (
           <div className="mb-2 flex flex-row">
             <IoInformationOutline className="h-5 w-5 text-red-500" />
             <p className="text-sm text-red-500">Credenciales incorrectas</p>
