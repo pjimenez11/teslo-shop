@@ -5,7 +5,6 @@ import prisma from "@/lib/prisma";
 import bcryptjs from "bcryptjs";
 
 const authenticateRoutes = [
-  "/cart",
   "/checkout/address",
   "/checkout",
   "/orders",
@@ -28,7 +27,6 @@ export const authConfig: NextAuthConfig = {
         if (isLoggedIn) return true;
         return false;
       }
-
       return true;
     },
     

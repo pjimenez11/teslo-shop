@@ -15,7 +15,7 @@ export const LoginForm = () => {
 
   const searchParams = useSearchParams();
 
-  const redirectPath = searchParams.get("callbackUrl")
+  const redirectPath = searchParams.get("callbackUrl");
 
   useEffect(() => {
     if (state === "Success") {
@@ -23,7 +23,7 @@ export const LoginForm = () => {
 
       window.location.replace(redirectPath || "/");
     }
-  }, [state]);
+  }, [state, redirectPath]);
 
   return (
     <form action={dispatch} className="flex flex-col">

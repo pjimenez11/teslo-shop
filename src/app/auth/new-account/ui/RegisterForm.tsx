@@ -83,7 +83,7 @@ export const RegisterForm = () => {
       </div>
 
       <div
-        className="flex h-5 fade-in items-end space-x-1"
+        className="flex h-5 fade-in items-end space-x-1 mb-2"
         aria-live="polite"
         aria-atomic="true"
       >
