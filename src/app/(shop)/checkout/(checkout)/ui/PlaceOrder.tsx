@@ -2,9 +2,16 @@
 
 import { useEffect, useState } from "react";
 import { LoadingPlaceOrder } from "./LoadingPlaceOrder";
+import { useAddressStore, useCartStore } from "@/store";
+import { currencyFormmat } from "@/utils";
 
 export const PlaceOrder = () => {
   const [loaded, setLoaded] = useState(false);
+
+  const address = useAddressStore((state) => state.address);
+  const { itemsInCart, subTotal, tax, total } = useCartStore((store) =>
+    store.getSumaryInformation()
+  );
 
   useEffect(() => {
     setLoaded(true);
@@ -16,29 +23,35 @@ export const PlaceOrder = () => {
     <div className="bg-white rounded-xl shadow-xl p-7 h-min">
       <h2 className="text-2xl  mb-2">Dirección de entrega</h2>
       <div className="mb-10">
-        <p className="text-xl">Patricio Jimenez</p>
-        <p>Av. Atahualpa y Rio Coca</p>
-        <p>Huachi Chico</p>
-        <p>Ambato</p>
-        <p>AM45153</p>
-        <p>123.123.123</p>
+        <p className="text-xl">
+          {address.firstName} {address.lastName}
+        </p>
+        <p>{address.address}</p>
+        <p>{address.address2}</p>
+        <p>{address.postalCode}</p>
+        <p>
+          {address.city}, {address.country}
+        </p>
+        <p>{address.phone}</p>
       </div>
 
       <div className="w-full h-0.5 rounded bg-gray-200 mb-10" />
 
       <h2 className="text-2xl mb-2">Resumen de orden</h2>
-      <div className="grid grid-cols-2">
+      <div className="grid grid-cols-2 gap-1">
         <span>No. Productos</span>
-        <span className="text-right">3 articulos</span>
+        <span className="text-right">{itemsInCart === 1 ? "1 artículo" : `${itemsInCart} artículos`} </span>
 
         <span>Subtotal</span>
-        <span className="text-right">$ 100</span>
+        <span className="text-right">{currencyFormmat(subTotal)}</span>
 
         <span>Impuestos (15%)</span>
-        <span className="text-right">$ 100</span>
+        <span className="text-right"> {currencyFormmat(tax)}</span>
 
         <span className="mt-5 text-2xl">Total</span>
-        <span className="mt-5 text-2xl text-right">$ 100</span>
+        <span className="mt-5 text-2xl text-right">
+          {currencyFormmat(total)}
+        </span>
       </div>
 
       <div className="mt-5 mb-2 w-full">
@@ -55,7 +68,7 @@ export const PlaceOrder = () => {
           </span>
         </p>
 
-        <button className="flex btn-primary justify-center">
+        <button className="flex w-full btn-primary justify-center">
           Colocar orden
         </button>
       </div>

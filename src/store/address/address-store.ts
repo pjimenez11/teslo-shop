@@ -6,7 +6,7 @@ interface State {
   address: {
     firstName: string;
     lastName: string;
-    address?: string;
+    address: string;
     address2?: string;
     city: string;
     postalCode: string;
