@@ -3,7 +3,6 @@ import { AddressForm } from "./ui/AddressForm";
 import { getCountries } from "@/actions";
 
 export default async function AddressPage() {
-
   const countries = await getCountries();
 
   return (
@@ -11,7 +10,7 @@ export default async function AddressPage() {
       <div className="w-full  xl:w-[1000px] flex flex-col justify-center text-left">
         <Title title="Dirección" subtitle="Dirección de entrega" />
 
-        <AddressForm />
+        <AddressForm countries={countries} />
       </div>
     </div>
   );
