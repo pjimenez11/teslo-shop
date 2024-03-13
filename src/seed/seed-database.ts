@@ -1,5 +1,6 @@
 import { initialData } from "./seed";
 import prisma from "../lib/prisma";
+import { countries } from "./seed-countries";
 
 async function main() {
   //1. Borrar todos los datos de la base de datos
@@ -8,10 +9,13 @@ async function main() {
   await prisma.productImage.deleteMany();
   await prisma.product.deleteMany();
   await prisma.category.deleteMany();
+  await prisma.country.deleteMany();
 
   const { categories, products, users } = initialData;
 
   //2. Insertar datos iniciales
+
+  await prisma.country.createMany({ data: countries });
 
   await prisma.user.createMany({ data: users });
 
