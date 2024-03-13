@@ -1,3 +1,4 @@
+
 import { Title } from "@/components";
 import { initialData } from "@/seed/seed";
 import Image from "next/image";
@@ -10,6 +11,7 @@ const productsInCart = [
 ];
 
 export default function CheckoutPage() {
+
   return (
     <div className="flex justify-center items-center mb-72 px-10 sm:px-0">
       <div className="flex flex-col w-[1000px]">
@@ -76,7 +78,14 @@ export default function CheckoutPage() {
             <div className="mt-5 mb-2 w-full">
               <p className="mb-5">
                 <span className="text-xs">
-                  Al hacer clic en &quot;Colocar orden&quot;, acepta nuestros <a href="#" className="underline">términos y condiciones</a> y <a href="#" className="underline">política de privacidad.</a>
+                  Al hacer clic en &quot;Colocar orden&quot;, acepta nuestros{" "}
+                  <a href="#" className="underline">
+                    términos y condiciones
+                  </a>{" "}
+                  y{" "}
+                  <a href="#" className="underline">
+                    política de privacidad.
+                  </a>
                 </span>
               </p>
 
