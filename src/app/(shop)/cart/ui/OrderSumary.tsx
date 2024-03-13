@@ -54,7 +54,7 @@ export const OrderSumary = () => {
     <>
       <div className="grid grid-cols-2 gap-1">
         <span>No. Productos</span>
-        <span className="text-right">{itemsInCart}</span>
+        <span className="text-right">{itemsInCart === 1 ? "1 artículo" : `${itemsInCart} artículos`} </span>
 
         <span>Subtotal</span>
         <span className="text-right">{currencyFormmat(subTotal)}</span>
