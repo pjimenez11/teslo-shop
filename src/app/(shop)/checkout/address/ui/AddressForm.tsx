@@ -4,6 +4,7 @@ import { deleteUserAddress, setUserAddress } from "@/actions";
 import { Country } from "@/interfaces";
 import { useAddressStore } from "@/store";
 import clsx from "clsx";
+import { Address } from "cluster";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -22,15 +23,18 @@ type FormInputs = {
 
 interface Props {
   countries: Country[];
+  userStoredAddress?: Partial<Address>;
 }
 
-export const AddressForm = ({ countries }: Props) => {
+export const AddressForm = ({ countries, userStoredAddress = {} }: Props) => {
   const {
     handleSubmit,
     register,
     formState: { isValid },
     reset,
-  } = useForm<FormInputs>({ defaultValues: {} });
+  } = useForm<FormInputs>({
+    defaultValues: { ...userStoredAddress, rememberAddress: true },
+  });
 
   const { data: session } = useSession({ required: true });
 
