@@ -14,6 +14,7 @@ export const PlaceOrder = () => {
   const { itemsInCart, subTotal, tax, total } = useCartStore((store) =>
     store.getSumaryInformation()
   );
+  const cart = useCartStore((store) => store.cart);
 
   useEffect(() => {
     setLoaded(true);
@@ -22,7 +23,14 @@ export const PlaceOrder = () => {
   const onPlaceOrder = async () => {
     setIsPlacingOrder(true);
 
-    
+    const productsToOrder = cart.map((product) => ({
+      productId: product.id,
+      quantity: product.quantity,
+      size: product.size,
+    }));
+
+    console.log("productsToOrder", productsToOrder);
+    console.log("address", address);
 
     setIsPlacingOrder(false);
   };
