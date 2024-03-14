@@ -3,10 +3,12 @@
 import { useEffect, useState } from "react";
 import { LoadingPlaceOrder } from "./LoadingPlaceOrder";
 import { useAddressStore, useCartStore } from "@/store";
-import { currencyFormmat } from "@/utils";
+import { currencyFormmat, sleep } from "@/utils";
+import clsx from "clsx";
 
 export const PlaceOrder = () => {
   const [loaded, setLoaded] = useState(false);
+  const [isPlacingOrder, setIsPlacingOrder] = useState(false);
 
   const address = useAddressStore((state) => state.address);
   const { itemsInCart, subTotal, tax, total } = useCartStore((store) =>
@@ -16,6 +18,14 @@ export const PlaceOrder = () => {
   useEffect(() => {
     setLoaded(true);
   }, []);
+
+  const onPlaceOrder = async () => {
+    setIsPlacingOrder(true);
+
+    
+
+    setIsPlacingOrder(false);
+  };
 
   if (!loaded) return <LoadingPlaceOrder />;
 
@@ -40,7 +50,9 @@ export const PlaceOrder = () => {
       <h2 className="text-2xl mb-2">Resumen de orden</h2>
       <div className="grid grid-cols-2 gap-1">
         <span>No. Productos</span>
-        <span className="text-right">{itemsInCart === 1 ? "1 artículo" : `${itemsInCart} artículos`} </span>
+        <span className="text-right">
+          {itemsInCart === 1 ? "1 artículo" : `${itemsInCart} artículos`}{" "}
+        </span>
 
         <span>Subtotal</span>
         <span className="text-right">{currencyFormmat(subTotal)}</span>
@@ -68,7 +80,18 @@ export const PlaceOrder = () => {
           </span>
         </p>
 
-        <button className="flex w-full btn-primary justify-center">
+        {/* <p className="text-red-500"> 
+            {isPlacingOrder && "Procesando orden..."}
+         </p> */}
+
+        <button
+          disabled={isPlacingOrder}
+          className={clsx("flex w-full justify-center", {
+            "btn-primary": !isPlacingOrder,
+            "btn-disabled": isPlacingOrder,
+          })}
+          onClick={() => onPlaceOrder()}
+        >
           Colocar orden
         </button>
       </div>
