@@ -5,6 +5,7 @@ import { LoadingPlaceOrder } from "./LoadingPlaceOrder";
 import { useAddressStore, useCartStore } from "@/store";
 import { currencyFormmat, sleep } from "@/utils";
 import clsx from "clsx";
+import { placeOrder } from "@/actions";
 
 export const PlaceOrder = () => {
   const [loaded, setLoaded] = useState(false);
@@ -29,8 +30,8 @@ export const PlaceOrder = () => {
       size: product.size,
     }));
 
-    console.log("productsToOrder", productsToOrder);
-    console.log("address", address);
+    const resp = await placeOrder(productsToOrder, address);
+    console.log(resp);
 
     setIsPlacingOrder(false);
   };
