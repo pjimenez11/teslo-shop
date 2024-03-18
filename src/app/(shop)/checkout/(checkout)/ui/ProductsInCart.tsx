@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
 import { useCartStore } from "@/store";
-import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
 import { LoandingCartProduct } from "@/components";
 import { currencyFormmat } from "@/utils";
@@ -23,9 +22,6 @@ export const ProductsInCart = () => {
       </div>
     );
 
-  if (productsInCart.length === 0) {
-    redirect("/empty");
-  }
   return (
     <>
       {productsInCart.map((product) => (

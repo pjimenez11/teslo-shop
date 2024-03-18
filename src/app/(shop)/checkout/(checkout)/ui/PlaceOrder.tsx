@@ -3,19 +3,24 @@
 import { useEffect, useState } from "react";
 import { LoadingPlaceOrder } from "./LoadingPlaceOrder";
 import { useAddressStore, useCartStore } from "@/store";
-import { currencyFormmat, sleep } from "@/utils";
+import { currencyFormmat } from "@/utils";
 import clsx from "clsx";
 import { placeOrder } from "@/actions";
+import { useRouter } from "next/navigation";
 
 export const PlaceOrder = () => {
+  const router = useRouter();
   const [loaded, setLoaded] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [isPlacingOrder, setIsPlacingOrder] = useState(false);
+  const [isCreateOrder, setIsCreateOrder] = useState(false);
 
   const address = useAddressStore((state) => state.address);
   const { itemsInCart, subTotal, tax, total } = useCartStore((store) =>
     store.getSumaryInformation()
   );
   const cart = useCartStore((store) => store.cart);
+  const clearCart = useCartStore((store) => store.clearCart);
 
   useEffect(() => {
     setLoaded(true);
@@ -31,12 +36,25 @@ export const PlaceOrder = () => {
     }));
 
     const resp = await placeOrder(productsToOrder, address);
-    console.log(resp);
 
-    setIsPlacingOrder(false);
+    if (!resp.ok) {
+      setIsPlacingOrder(false);
+      setErrorMessage(resp.message);
+    }
+
+    if (resp.ok) {
+      setIsCreateOrder(true);
+      router.push(`/orders/${resp.order?.id}`);
+      clearCart();
+    }
   };
 
   if (!loaded) return <LoadingPlaceOrder />;
+
+  if (itemsInCart === 0 && !isCreateOrder) {
+    router.push("/empty");
+    return null;
+  }
 
   return (
     <div className="bg-white rounded-xl shadow-xl p-7 h-min">
@@ -76,7 +94,7 @@ export const PlaceOrder = () => {
       </div>
 
       <div className="mt-5 mb-2 w-full">
-        <p className="mb-5">
+        <p className="mb-2">
           <span className="text-xs">
             Al hacer clic en &quot;Colocar orden&quot;, acepta nuestros{" "}
             <a href="#" className="underline">
@@ -89,9 +107,7 @@ export const PlaceOrder = () => {
           </span>
         </p>
 
-        {/* <p className="text-red-500"> 
-            {isPlacingOrder && "Procesando orden..."}
-         </p> */}
+        <p className="text-red-500 mb-2 text-sm ">{errorMessage} &nbsp;</p>
 
         <button
           disabled={isPlacingOrder}
