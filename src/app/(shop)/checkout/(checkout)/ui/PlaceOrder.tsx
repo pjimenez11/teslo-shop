@@ -6,7 +6,7 @@ import { useAddressStore, useCartStore } from "@/store";
 import { currencyFormmat } from "@/utils";
 import clsx from "clsx";
 import { placeOrder } from "@/actions";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
 export const PlaceOrder = () => {
   const router = useRouter();
@@ -51,9 +51,8 @@ export const PlaceOrder = () => {
 
   if (!loaded) return <LoadingPlaceOrder />;
 
-  if (itemsInCart === 0 && !isCreateOrder) {
-    router.push("/empty");
-    return null;
+  if (!address.firstName) {
+    redirect("/checkout/address");
   }
 
   return (

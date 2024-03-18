@@ -31,6 +31,20 @@ export const placeOrder = async (
     },
   });
 
+  if (products.length !== productIds.length) {
+    return {
+      ok: false,
+      message: "No se encontraron todos los productos.",
+    };
+  }
+
+  if (products.length === 0) {
+    return {
+      ok: false,
+      message: "No hay productos en la orden.",
+    };
+  }
+
   const itemsInOrder = productIds.reduce(
     (count, product) => count + product.quantity,
     0
